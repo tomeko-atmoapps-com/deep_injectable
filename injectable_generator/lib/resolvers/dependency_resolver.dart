@@ -18,6 +18,7 @@ const TypeChecker _injectableChecker = TypeChecker.fromRuntime(Injectable);
 const TypeChecker _envChecker = TypeChecker.fromRuntime(Environment);
 const TypeChecker _preResolveChecker = TypeChecker.fromRuntime(PreResolve);
 const TypeChecker _factoryParamChecker = TypeChecker.fromRuntime(FactoryParam);
+const TypeChecker _paramReceiverChecker = TypeChecker.fromRuntime(ParamReceiver);
 const TypeChecker _scopeChecker = TypeChecker.fromRuntime(Scope);
 const TypeChecker _factoryMethodChecker =
     TypeChecker.fromRuntime(FactoryMethod);
@@ -276,6 +277,7 @@ class DependencyResolver {
           ? _typeResolver.resolveFunctionType(param.type as FunctionType)
           : _typeResolver.resolveType(param.type);
       final isFactoryParam = _factoryParamChecker.hasAnnotationOfExact(param);
+      final isParamReceiver = _paramReceiverChecker.hasAnnotationOfExact(param);
 
       throwIf(
         isFactoryParam && !resolvedType.isNullable && _isAsync,
@@ -287,16 +289,14 @@ class DependencyResolver {
         type: resolvedType,
         instanceName: instanceName,
         isFactoryParam: isFactoryParam,
-        paramName: param.name,
+        isParamReceiver: isParamReceiver,
+        paramName: executableInitializer.parameters.firstOrNull((element) => _factoryParamChecker.hasAnnotationOfExact(element))?.name ?? 'passedParam',
         isPositional: param.isPositional,
       ));
     }
 
-    _canBeConst = (executableInitializer is ConstructorElement &&
-            executableInitializer.isConst) &&
-        _dependencies.isEmpty;
-    final factoryParamsCount =
-        _dependencies.where((d) => d.isFactoryParam).length;
+    _canBeConst = (executableInitializer is ConstructorElement && executableInitializer.isConst) && _dependencies.isEmpty;
+    final factoryParamsCount = _dependencies.where((d) => d.isFactoryParam).length;
 
     throwIf(
       _preResolve && factoryParamsCount != 0,

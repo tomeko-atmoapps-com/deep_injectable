@@ -106,7 +106,7 @@ void _sortByDependents(
   for (var dep in unSorted) {
     if (dep.dependencies.every(
       (iDep) {
-        if (iDep.isFactoryParam) {
+        if (iDep.isFactoryParam || iDep.isParamReceiver) {
           return true;
         }
         // if dep is already in sorted return true

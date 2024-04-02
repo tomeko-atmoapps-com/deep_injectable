@@ -241,7 +241,7 @@ class InjectableConfigGenerator extends GeneratorForAnnotation<InjectableInit> {
     final messages = [];
     for (final dep in deps) {
       for (var iDep in dep.dependencies.where(
-          (d) => !d.isFactoryParam && d.instanceName != kEnvironmentsName)) {
+          (d) => !d.isFactoryParam && !d.isParamReceiver && d.instanceName != kEnvironmentsName)) {
         if ((ignoredTypes.contains(iDep.type) ||
             (iDep.type.import == null ||
                 ignoredTypesInPackages.any(

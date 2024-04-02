@@ -6,6 +6,7 @@ class InjectedDependency {
   String paramName;
   bool isFactoryParam;
   bool isPositional;
+  bool isParamReceiver;
 
   InjectedDependency({
     required this.type,
@@ -13,6 +14,7 @@ class InjectedDependency {
     this.instanceName,
     this.isFactoryParam = false,
     this.isPositional = true,
+    this.isParamReceiver = false,
   });
 
   @override
@@ -29,6 +31,7 @@ class InjectedDependency {
           instanceName == other.instanceName &&
           paramName == other.paramName &&
           isFactoryParam == other.isFactoryParam &&
+          isParamReceiver == other.isParamReceiver &&
           isPositional == other.isPositional);
 
   @override
@@ -37,6 +40,7 @@ class InjectedDependency {
       instanceName.hashCode ^
       paramName.hashCode ^
       isFactoryParam.hashCode ^
+      isParamReceiver.hashCode ^
       isPositional.hashCode;
 
   factory InjectedDependency.fromJson(Map<String, dynamic> json) {
@@ -46,6 +50,7 @@ class InjectedDependency {
       paramName: json['paramName'],
       isFactoryParam: json['isFactoryParam'],
       isPositional: json['isPositional'],
+      isParamReceiver: json['isParamReceiver'],
     );
   }
 
@@ -57,6 +62,7 @@ class InjectedDependency {
       'paramName': paramName,
       'isFactoryParam': isFactoryParam,
       'isPositional': isPositional,
+      'isParamReceiver': isParamReceiver,
     } as Map<String, dynamic>;
   }
 }
