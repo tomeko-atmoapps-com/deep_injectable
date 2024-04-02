@@ -210,12 +210,7 @@ const lazySingleton = LazySingleton();
 /// Used to register a dependency under a name
 /// instead of type also used to annotated
 /// named injected dependencies in constructors
-@Target({
-  TargetKind.classType,
-  TargetKind.parameter,
-  TargetKind.method,
-  TargetKind.getter
-})
+@Target({TargetKind.classType, TargetKind.parameter, TargetKind.method, TargetKind.getter})
 class Named {
   /// The name in which an instance is registered
   final String? name;
@@ -298,6 +293,19 @@ class FactoryParam {
 /// const instance of [FactoryParam]
 /// with default arguments
 const factoryParam = FactoryParam._();
+
+/// Marks a constructor param as
+/// paramReceiver so it can receive
+/// dynamic parameter deeper than
+/// on the very first level
+@Target({TargetKind.parameter})
+class ParamReceiver {
+  const ParamReceiver._();
+}
+
+/// const instance of [ParamReceiver]
+/// with default arguments
+const paramReceiver = ParamReceiver._();
 
 /// Constructor params annotated with [IgnoreParam]
 /// will be ignored by when generating the
