@@ -1,6 +1,6 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
-import 'package:deep_injectable/deep_injectable.dart';
+import 'package:deep_injectablex/deep_injectable.dart';
 import 'package:deep_injectable_generator/models/dependency_config.dart';
 import 'package:deep_injectable_generator/models/dispose_function_config.dart';
 import 'package:deep_injectable_generator/models/importable_type.dart';
@@ -157,7 +157,7 @@ class DependencyResolver {
         element: clazz,
       );
 
-      _type = _typeResolver.resolveType(abstractSubtype!);
+      _type = _typeResolver.resolveType(abstractType);
     }
 
     _environments = inlineEnv ??
@@ -280,7 +280,7 @@ class DependencyResolver {
         instanceName: instanceName,
         isFactoryParam: isFactoryParam,
         isParamReceiver: isParamReceiver,
-        paramName: executableInitializer.parameters.firstOrNull((element) => _factoryParamChecker.hasAnnotationOfExact(element))?.name ?? 'passedParam',
+        paramName: isFactoryParam ? param.name : 'passedParam',
         isPositional: param.isPositional,
       ));
     }
