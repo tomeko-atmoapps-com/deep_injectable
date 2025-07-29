@@ -1,6 +1,6 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
-import 'package:deep_injectablex/deep_injectable.dart';
+import 'package:deep_injectable/deep_injectable.dart';
 import 'package:deep_injectable_generator/models/dependency_config.dart';
 import 'package:deep_injectable_generator/models/dispose_function_config.dart';
 import 'package:deep_injectable_generator/models/importable_type.dart';
